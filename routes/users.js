@@ -1,11 +1,20 @@
 const { Router } = require("express");
-const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
-const bcrypt = require("bcrypt");
+
+const {
+  getAllUsers,
+  getUser,
+  putUser,
+  deleteUser,
+} = require("../controllers/users");
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", getAllUsers);
+router.get("/:id", getUser);
+router.put("/:id", putUser);
+router.delete("/:id", deleteUser);
+
+/*router.get("/", (req, res) => {
   fs.readFile("users.json", "utf-8", (err, data) => {
     if (err) {
       console.log("File unshihad aldaa zaalaa");
@@ -87,6 +96,6 @@ router.delete("/:id", (req, res) => {
   res
     .status(201)
     .json({ message: `${id} тай хэрэглэгч амжилттай устгагдлаа.` });
-});
+});*/
 
 module.exports = router;

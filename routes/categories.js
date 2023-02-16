@@ -1,12 +1,18 @@
 const { Router } = require("express");
-const fs = require("fs");
 
-const { v4: uuidv4 } = require("uuid");
-const bcrypt = require("bcrypt");
+const {
+  getCategories,
+  deleteCategory,
+  addCategory,
+} = require("../controllers/categories");
 
 const router = Router();
 
-router.post("/", (req, res) => {
+router.get("/", getCategories);
+router.put("/", addCategory);
+router.delete("/:id", deleteCategory);
+
+/*router.post("/", (req, res) => {
   try {
     const content = fs.readFileSync("categories.json");
     const newData = { ...req.body };
@@ -43,6 +49,6 @@ router.delete("/:id", (req, res) => {
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }
-});
+}); */
 
 module.exports = router;
