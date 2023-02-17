@@ -4,7 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const server = express();
 
-const controller = "";
+// const controller = "npm run dev
+// ";
 
 const usersRoute = require("./routes/users");
 const categoriesRoute = require("./routes/categories");

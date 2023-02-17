@@ -9,7 +9,7 @@ const {
 const router = Router();
 
 router.get("/", getCategories);
-router.put("/", addCategory);
+router.post("/", addCategory);
 router.delete("/:id", deleteCategory);
 
 /*router.post("/", (req, res) => {

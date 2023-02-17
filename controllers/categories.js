@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-const filePath = ".data/categories.json";
+const filePath = "./data/categories.json";
 
 const getCategories = (req, res) => {
   try {
