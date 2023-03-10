@@ -3,16 +3,18 @@ const { Router } = require("express");
 const {
   getAllUsers,
   getUser,
-  putUser,
   deleteUser,
+  updateUser,
+  createUser,
 } = require("../controllers/users");
 
 const router = Router();
 
 router.get("/", getAllUsers);
 router.get("/:id", getUser);
-router.put("/:id", putUser);
+router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
+router.post("/", createUser);
 
 /*router.get("/", (req, res) => {
   fs.readFile("users.json", "utf-8", (err, data) => {

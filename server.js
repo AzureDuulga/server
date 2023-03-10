@@ -21,7 +21,7 @@ server.use(express.json());
 //data MYSQL req
 
 server.get("/", async (req, res) => {
-  connection.query("SELECT * FROM azure_user", (err, result) => {
+  connection.query("SELECT * FROM user", (err, result) => {
     if (err) {
       res.status(400).json({ message: err.message });
       return;
@@ -32,23 +32,20 @@ server.get("/", async (req, res) => {
 
 server.get("/:id", async (req, res) => {
   const { id } = req.params;
-  connection.query(
-    `SELECT * FROM azure_user WHERE aid=${id}`,
-    (err, result) => {
-      if (err) {
-        res.status(400).json({ message: err.message });
+  connection.query(`SELECT * FROM user WHERE id=${id}`, (err, result) => {
+    if (err) {
+      res.status(400).json({ message: err.message });
 
-        return;
-      }
-      res.status(200).json({ message: "success", data: result });
+      return;
     }
-  );
+    res.status(200).json({ message: "success", data: result });
+  });
 });
 
 server.post("/", async (req, res) => {
   const { id } = req.params;
   connection.query(
-    `INSERT INTO azure_user(aid, name ,owog) VALUE("${id}","${req.body.name}","${req.body.owog}")`,
+    `INSERT INTO user(aid, name ,owog) VALUE("${id}","${req.body.name}","${req.body.owog}")`,
     (err, result) => {
       if (err) {
         res.status(400).json({ message: err.message });
@@ -70,8 +67,8 @@ server.put("/:id", async (req, res) => {
   const join = map.join();
 
   connection.query(
-    // `UPDATE  azure_user SET name="${req.body.name}", owog="${req.body.owog}" WHERE aid=${id}`,
-    `UPDATE  azure_user SET ${join} " WHERE aid=${id}`,
+    // `UPDATE  user SET name="${req.body.name}", owog="${req.body.owog}" WHERE aid=${id}`,
+    `UPDATE  user SET ${join} " WHERE id=${id}`,
     (err, result) => {
       if (err) {
         res.status(400).json({ message: err.message });
@@ -85,7 +82,7 @@ server.put("/:id", async (req, res) => {
 
 server.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  connection.query(`DELETE FROM azure_user WHERE aid=${id}`, (err, result) => {
+  connection.query(`DELETE FROM user WHERE id=${id}`, (err, result) => {
     if (err) {
       res.status(400).json({ message: err.message });
 
