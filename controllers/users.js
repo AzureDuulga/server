@@ -42,9 +42,13 @@ const updateUser = (req, res) => {
 };
 
 const createUser = (req, res) => {
+  console.log(req.body);
   const { name, email, password, phoneNumber } = req.body;
   const salted = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salted);
+  console.log(name);
+  console.log(email);
+  console.log(phoneNumber);
   const query =
     "INSERT INTO user (id, name,email,password, phone_number, profile_Img) VALUES(null, ?, ?, ?, ?, ?)";
   connection.query(
