@@ -11,7 +11,7 @@ const getAllUsers = (req, res) => {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.status(200).json({ result });
+    res.status(200).json({ message: "Success", data: result });
   });
 };
 

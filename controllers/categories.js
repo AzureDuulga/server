@@ -2,15 +2,42 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const filePath = "./data/categories.json";
+const connection = require("../config/db");
 
 const getCategories = (req, res) => {
-  try {
-    const categoriesData = fs.readFileSync(filePath, "utf-8");
-    const data = JSON.parse(categoriesData);
-    res.status(200).json({ message: "success", data });
-  } catch (err) {
-    return res.status(400).json({ message: err.message });
-  }
+  const query = `SELECT * FROM categories`;
+  connection.query(query, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.status(200).json({ result });
+  });
+};
+const getCategory = (req, res) => {
+  const { id } = req.params;
+  const query = `SELECT * FROM categories WHERE id=?`;
+  connection.query(query, [id], (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.status(200).json({ data: result[0] });
+  });
+};
+
+const updateCategory = (req, res) => {
+  const { id } = req.params;
+  const keys = Object.keys(req.body);
+  const parsedData = keys.map((key) => `${key}='${req.body[key]}'`).join();
+  const query = `UPDATE categories SET ? WHERE id= ?`;
+  connection.query(query, [parsedData, id], (err, res) => {
+    if (err) {
+      res.status(400).json({ message: err.message });
+      return;
+    }
+    res.status(200).json({ message: "Succesful", data: res });
+  });
 };
 
 const addCategory = (req, res) => {
@@ -42,4 +69,10 @@ const deleteCategory = (req, res) => {
   }
 };
 
-module.exports = { getCategories, deleteCategory, addCategory };
+module.exports = {
+  getCategories,
+  getCategory,
+  updateCategory,
+  deleteCategory,
+  addCategory,
+};
