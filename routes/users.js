@@ -10,11 +10,11 @@ const {
 
 const router = Router();
 
+router.post("/", createUser);
 router.get("/", getAllUsers);
 router.get("/:id", getUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
-router.post("/", createUser);
 
 /*router.get("/", (req, res) => {
   fs.readFile("users.json", "utf-8", (err, data) => {
